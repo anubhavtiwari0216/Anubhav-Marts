@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anubhav Mart</title>
+<link rel="stylesheet" href="Font.css">
+</head>
+<body>
+
+<!-- HERO -->
+<div id="heroPage" class="page active">
+  <div class="hero">
+    <div class="floaties" id="heroFloaties"></div>
+    <h1>🛒 Welcome to Anubhav Mart</h1>
+    <p>Everyday essentials delivered with style and speed</p>
+    <div class="hero-btns">
+      <button class="btn-login"  onclick="showPage('loginPage')">🔑 Login</button>
+      <button class="btn-signup" onclick="showPage('signupPage')">✨ Sign Up</button>
+      <button class="btn-skip"   onclick="skipAuth()">Skip for now</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="loginPage" class="page">
+  <div class="auth-page">
+    <div class="floaties" id="loginFloaties"></div>
+    <div class="auth-box">
+      <h2>👋 Welcome Back!</h2>
+      <p class="auth-sub">Login to continue ordering</p>
+      <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:10px;padding:9px 13px;margin-bottom:14px;font-size:12px;color:#856404;text-align:center;">
+        🆕 First time? <span onclick="showPage('signupPage')" style="color:#ff3366;cursor:pointer;font-weight:700;">Create a free account</span> first!
+      </div>
+      <div class="global-err" id="loginGlobalErr"></div>
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="your@email.com" onkeydown="if(event.key==='Enter')doLogin()">
+        <div class="field-err" id="loginEmailErr">Please enter a valid email</div>
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="loginPw" placeholder="Your password" onkeydown="if(event.key==='Enter')doLogin()">
+          <button class="pw-eye" type="button" onclick="togglePw('loginPw',this)">👁</button>
+        </div>
+        <div class="field-err" id="loginPwErr">Password is required</div>
+      </div>
+      <button class="auth-submit" onclick="doLogin()">Login →</button>
+      <div class="auth-switch">No account? <span onclick="showPage('signupPage')">Sign Up</span> &nbsp;·&nbsp; <span onclick="skipAuth()">Skip for now</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNUP -->
+<div id="signupPage" class="page">
+  <div class="auth-page">
+    <div class="floaties" id="signupFloaties"></div>
+    <div class="auth-box">
+      <h2>🌟 Create Account</h2>
+      <p class="auth-sub">Join us and start ordering!</p>
+      <div class="global-err" id="signupGlobalErr"></div>
+      <div class="auth-field">
+        <label>Full Name</label>
+        <input type="text" id="signupName" placeholder="Your full name">
+        <div class="field-err" id="signupNameErr">Name must be at least 2 characters</div>
+      </div>
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="signupEmail" placeholder="your@email.com">
+        <div class="field-err" id="signupEmailErr">Please enter a valid email</div>
+      </div>
+      <div class="auth-field">
+        <label>Phone Number</label>
+        <input type="tel" id="signupPhone" placeholder="10-digit mobile number" maxlength="10">
+        <div class="field-err" id="signupPhoneErr">Enter a valid 10-digit phone number</div>
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="signupPw" placeholder="Min 6 characters">
+          <button class="pw-eye" type="button" onclick="togglePw('signupPw',this)">👁</button>
+        </div>
+        <div class="field-err" id="signupPwErr">Password must be at least 6 characters</div>
+      </div>
+      <div class="auth-field">
+        <label>Confirm Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="signupConfirm" placeholder="Repeat password" onkeydown="if(event.key==='Enter')doSignup()">
+          <button class="pw-eye" type="button" onclick="togglePw('signupConfirm',this)">👁</button>
+        </div>
+        <div class="field-err" id="signupConfirmErr">Passwords do not match</div>
+      </div>
+      <button class="auth-submit" onclick="doSignup()">Create Account →</button>
+      <div class="auth-switch">Already have an account? <span onclick="showPage('loginPage')">Login</span> &nbsp;·&nbsp; <span onclick="skipAuth()">Skip for now</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- WELCOME -->
+<div id="welcomePage" class="page">
+  <div class="welcome-page">
+    <div class="floaties" id="welcomeFloaties"></div>
+    <div class="welcome-avatar" id="welcomeAvatar">👋</div>
+    <h1 id="welcomeTitle">Welcome!</h1>
+    <p id="welcomeMsg">Ready to shop some amazing deals?</p>
+    <button onclick="goToMenu()">Let's Shop! 🛍️</button>
+  </div>
+</div>
+
+<!-- MENU -->
+<div id="menuPage" class="page">
+  <div class="header">
+    <button class="back-btn" onclick="showPage('heroPage')">← Home</button>
+    🛒 Anubhav Mart
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span id="headerUser"></span>
+      <button class="cart-btn" onclick="goToCart()">
+        🛒 Cart <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <input id="searchBar" type="text" placeholder="🔍 Search for products..." oninput="searchmart(this.value)">
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters-wrapper">
+    <button class="filter-scroll-btn" id="scrollLeft" onclick="scrollFilters(-1)" title="Scroll left">&#8249;</button>
+    <div class="filters" id="filtersBar">
+      <button class="active-filter" onclick="filtermart('All',this)">All</button>
+      <button onclick="filtermart('Breakfast & Cereals',this)">Breakfast &amp; Cereals</button>
+      <button onclick="filtermart('Snacks (Namkeen)',this)">Snacks (Namkeen)</button>
+      <button onclick="filtermart('Beverages',this)">Beverages</button>
+      <button onclick="filtermart('Dairy Products',this)">Dairy Products</button>
+      <button onclick="filtermart('Bakery',this)">Bakery</button>
+      <button onclick="filtermart('Groceries & Staples',this)">Groceries &amp; Staples</button>
+      <button onclick="filtermart('Cleaning Supplies',this)">Cleaning Supplies</button>
+      <button onclick="filtermart('Sweets & Chocolates',this)">Sweets &amp; Chocolates</button>
+      <button onclick="filtermart('Rice & Grains',this)">Rice &amp; Grains</button>
+      <button onclick="filtermart('Spices & Masalas',this)">Spices &amp; Masalas</button>
+      <button onclick="filtermart('Instant & Ready-to-Cook',this)">Instant &amp; Ready-to-Cook</button>
+      <button onclick="filtermart('Personal Care',this)">Personal Care</button>
+      <button onclick="filtermart('Baby Care',this)">Baby Care</button>
+      <button onclick="filtermart('Fruits & Vegetables',this)">Fruits &amp; Vegetables</button>
+      <button onclick="filtermart('Household Essentials',this)">Household Essentials</button>
+    </div>
+    <button class="filter-scroll-btn" id="scrollRight" onclick="scrollFilters(1)" title="Scroll right">&#8250;</button>
+  </div>
+
+  <div class="container" id="martContainer"></div>
+</div>
+
+<!-- CART -->
+<div id="cartPage" class="page">
+  <div class="cart-header">
+    <button class="back-btn" onclick="goToMenu()">← Shop</button>
+    <h2>🛒 Your Cart</h2>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+</div>
+
+<!-- ORDER HISTORY -->
+<div id="historyPage" class="page">
+  <div class="hist-header">
+    <button class="back-btn" onclick="setNav('menu');goToMenu()">← Shop</button>
+    <h2>📋 Order History</h2>
+  </div>
+  <div class="hist-body" id="histBody"></div>
+</div>
+
+<!-- PROFILE -->
+<div id="profilePage" class="page">
+  <div class="prof-header">
+    <button class="back-btn" onclick="setNav('menu');goToMenu()">← Shop</button>
+    <h2>👤 My Profile</h2>
+  </div>
+  <div class="prof-body" id="profBody"></div>
+</div>
+
+<!-- ITEM MODAL -->
+<div id="itemModal" onclick="modalBgClick(event)">
+  <div class="modal-box">
+    <div class="modal-img-wrap">
+      <img id="modalImg" class="modal-img" src="" alt="">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <h2 id="modalName"></h2>
+      <div class="modal-cat" id="modalCat"></div>
+      <div class="modal-price" id="modalPrice"></div>
+      <div class="modal-qty">
+        <button onclick="modalQtyChange(-1)">−</button>
+        <span id="modalQtyVal">1</span>
+        <button onclick="modalQtyChange(1)">+</button>
+      </div>
+      <textarea class="modal-note" id="modalNote" rows="2" placeholder="Special instructions (e.g. gift wrap, urgent delivery)..."></textarea>
+      <button class="modal-add" onclick="modalAddCart()">Add to Cart 🛒</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast">
+  <span id="toastName"></span>
+  <button class="toast-btn" onclick="goToCart()">Go to Cart →</button>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav" id="bottomNav" style="display:none;">
+  <button class="nav-btn active" id="nav-home" onclick="navClick('home')">
+    <span class="nav-icon">🏠</span><span>Home</span>
+  </button>
+  <button class="nav-btn" id="nav-menu" onclick="navClick('menu')">
+    <span class="nav-icon">🛍️</span><span>Shop</span>
+  </button>
+  <button class="nav-btn" id="nav-cart" onclick="navClick('cart')">
+    <div class="nav-cart-badge">
+      <span class="nav-icon">🛒</span>
+      <span class="nav-cart-dot" id="navCartDot"></span>
+    </div>
+    <span>Cart</span>
+  </button>
+  <button class="nav-btn" id="nav-history" onclick="navClick('history')">
+    <span class="nav-icon">📋</span><span>Orders</span>
+  </button>
+  <button class="nav-btn" id="nav-profile" onclick="navClick('profile')">
+    <span class="nav-icon">👤</span><span>Profile</span>
+  </button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
